@@ -158,7 +158,7 @@
 // };
 // Yêu cầu:
 // Hãy dùng Spread Operator để tạo ra một object newCart sao chép từ cart nhưng thay đổi total thành 2000.
-// Câu hỏi tư duy: Nếu em dùng newCart.items.push({ id: 3, name: "Tai nghe", price: 300 }), thì mảng items ở cart gốc có bị thêm phần tử không? Tại sao? 
+// Câu hỏi tư duy: Nếu em dùng newCart.items.push({ id: 3, name: "Tai nghe", price: 300 }), thì mảng items ở cart gốc có bị thêm phần tử không? Tại sao?
 // (Hãy nhớ về cơ chế Shallow Copy).
 
 // ======================================= Bài làm
@@ -180,4 +180,33 @@
 
 // Trả lời : cả cart gốc và newCart đều được thêm id = 3 nhé , vì speard chỉ coppy cái vỏ cart còn "items" thì coppy địa chỉ vùng nhớ ạ!
 
+/**
+ * Yêu cầu: Cho Object student dưới đây. Hãy tạo ra một bản sao tên là updatedStudent sao cho:
+ * Thay đổi name thành "Bảo Pro".
+ * Thêm một sở thích "Photography" vào mảng hobbies.
+ * Thay đổi điểm math trong scores thành 10.
+ * Quan trọng: Sau khi thay đổi, object student gốc không được phép bị thay đổi bất cứ giá trị nào.
+ */
 
+const student = {
+  name: "Bảo",
+  hobbies: ["Code", "Gym"],
+  scores: {
+    math: 8,
+    english: 9,
+  },
+};
+
+const updatedStudent = {
+  ...student, // 1. Copy cái vỏ ngoài (name, hobbies, scores)
+  name: "Bảo Pro", // 2. Ghi đè name mới
+  hobbies: [...student.hobbies, "Photography"], // 3. Copy mảng cũ và thêm phần tử mới
+  scores: {
+    ...student.scores, // 4. Copy các điểm cũ (english)
+    math: 10, // 5. Ghi đè điểm math mới
+  },
+};
+
+// Kiểm tra
+console.log("Gốc:", student.hobbies); // ["Code", "Gym"] -> Vẫn nguyên vẹn
+console.log("Mới:", updatedStudent.hobbies); // ["Code", "Gym", "Photography"]
