@@ -84,50 +84,119 @@
 // removeStudent(id): Xóa một học sinh khỏi danh sách dựa trên ID.
 // Sử dụng: .filter() (Gợi ý: lọc lấy những người có ID khác với ID truyền vào)
 
-function createClassroom(className) {
-  let students = [];
-  let count = 1;
+// function createClassroom(className) {
+//   let students = [];
+//   let count = 1;
+//   return {
+//     addStudent(name, score) {
+//       let student = { id: count++, name, score };
+//       students.push(student);
+//       return `Đã Thêm Sinh Viên : ${name}`;
+//     },
+//     getPassedStudents() {
+//       return students.filter((student) => student.score > 5);
+//     },
+//     getStudentNames() {
+//       return students.map((student) => student.name.toUpperCase());
+//     },
+//     getAverageScore() {
+//       if (students.length === 0) return 0;
+//       const total = students.reduce((acc, student) => acc + student.score, 0);
+//       return total;
+//     },
+//     getStudentRankings() {
+//       return students.map((student) => ({
+//         ...student,
+//         rank: student.score >= 8 ? "Giỏi" : "Cần cố gắng",
+//       }));
+//     },
+//     removeStudent(id) {
+//       students = students.filter((student) => student.id !== id);
+//       return `Đã xóa học sinh có ID: ${id}`;
+//     },
+//     showAll() {
+//       return students;
+//     },
+//   };
+// }
+
+// const myClass = createClassroom("NodeJS Backend");
+// myClass.addStudent("Anh Tuấn", 9);
+// myClass.addStudent("Bảo Ngọc", 4);
+// myClass.addStudent("Hoàng Nam", 7);
+
+// console.log("Danh sách tên (Viết hoa):", myClass.getStudentNames());
+// console.log("Học sinh đạt:", myClass.getPassedStudents());
+// console.log("Điểm trung bình lớp:", myClass.getAverageScore());
+// console.log("Xếp loại:", myClass.getStudentRankings());
+// console.log(myClass.removeStudent(2));
+// console.log("Sau khi xóa ID 2:", myClass.showAll());
+
+// ======================================= Bài tập thực hành (bài tập mới) ==============================================
+// 📝 Bài tập nâng cấp: Hệ thống phân tích đơn hàng (Order Analytics)
+// Ngữ cảnh: Bạn có một mảng các đơn hàng từ Database. Mỗi đơn hàng có danh sách sản phẩm, trạng thái và ngày tạo.
+//  Bạn cần viết một hàm analyzeOrders(orders) trả về một báo cáo chi tiết.
+
+// Dữ liệu đầu vào:
+// JavaScript
+// const orders = [
+//   { id: 1, customer: "Alice", items: [{ name: "Laptop", price: 1000 }, { name: "Mouse", price: 50 }], status: "completed" },
+//   { id: 2, customer: "Bob", items: [{ name: "Phone", price: 500 }], status: "pending" },
+//   { id: 3, customer: "Alice", items: [{ name: "Keyboard", price: 100 }], status: "completed" },
+//   { id: 4, customer: "Charlie", items: [{ name: "Monitor", price: 300 }], status: "completed" },
+// ];
+// Yêu cầu bạn cần thực hiện:
+// Tính tổng doanh thu của các đơn hàng completed: (Dùng .filter() và .reduce()).
+// Thống kê chi tiêu theo từng khách hàng: Trả về một Object với Key là tên khách hàng, Value là tổng số tiền họ đã mua (Chỉ tính đơn completed).
+// Ví dụ: { "Alice": 1100, "Charlie": 300 }
+// Gợi ý: Dùng .reduce() với initialValue là một Object {}.
+// Tìm danh sách các sản phẩm độc nhất (Unique Products): Trả về một mảng chứa tên tất cả các sản phẩm đã được bán, nhưng không được lặp lại tên.
+// Gợi ý: Dùng .flatMap() để trải phẳng mảng items, sau đó dùng new Set() hoặc .filter() để lọc trùng.
+// Kiểm tra đơn hàng "VIP": Trả về true nếu tất cả đơn hàng completed đều có tổng giá trị > 100. (Dùng .every()).
+// 💡 Gợi ý kỹ thuật mới cho bạn: .flatMap()
+// Khi bạn có một mảng chứa các mảng con (như items trong orders), map() sẽ tạo ra mảng lồng nhau. flatMap() sẽ giúp bạn vừa biến đổi vừa "làm phẳng" chúng.
+
+// ======================================= Bai lam
+
+const orders = [
+  {
+    id: 1,
+    customer: "Alice",
+    items: [
+      { name: "Laptop", price: 1000 },
+      { name: "Mouse", price: 50 },
+    ],
+    status: "completed",
+  },
+  {
+    id: 2,
+    customer: "Bob",
+    items: [{ name: "Phone", price: 500 }],
+    status: "pending",
+  },
+  {
+    id: 3,
+    customer: "Alice",
+    items: [{ name: "Keyboard", price: 100 }],
+    status: "completed",
+  },
+  {
+    id: 4,
+    customer: "Charlie",
+    items: [{ name: "Monitor", price: 300 }],
+    status: "completed",
+  },
+];
+
+function analyzeOrders(orders) {
   return {
-    addStudent(name, score) {
-      let student = { id: count++, name, score };
-      students.push(student);
-      return `Đã Thêm Sinh Viên : ${name}`;
-    },
-    getPassedStudents() {
-      return students.filter((student) => student.score > 5);
-    },
-    getStudentNames() {
-      return students.map((student) => student.name.toUpperCase());
-    },
-    getAverageScore() {
-      if (students.length === 0) return 0;
-      const total = students.reduce((acc, student) => acc + student.score, 0);
-      return total;
-    },
-    getStudentRankings() {
-      return students.map((student) => ({
-        ...student,
-        rank: student.score >= 8 ? "Giỏi" : "Cần cố gắng",
-      }));
-    },
-    removeStudent(id) {
-      students = students.filter((student) => student.id !== id);
-      return `Đã xóa học sinh có ID: ${id}`;
-    },
-    showAll() {
-      return students;
-    },
   };
 }
 
-const myClass = createClassroom("NodeJS Backend");
-myClass.addStudent("Anh Tuấn", 9);
-myClass.addStudent("Bảo Ngọc", 4);
-myClass.addStudent("Hoàng Nam", 7);
+const analytics = analyzeOrders(orders);
+console.log("Doanh thu:", analytics.getTotalRevenue());
+console.log("Chi tiêu mỗi khách:", analytics.getCustomerSpending());
+console.log("Sản phẩm đã bán:", analytics.getUniqueProducts());
+console.log("Tất cả đơn > 100?", analytics.isAllHighValue());
 
-console.log("Danh sách tên (Viết hoa):", myClass.getStudentNames());
-console.log("Học sinh đạt:", myClass.getPassedStudents());
-console.log("Điểm trung bình lớp:", myClass.getAverageScore());
-console.log("Xếp loại:", myClass.getStudentRankings());
-console.log(myClass.removeStudent(2));
-console.log("Sau khi xóa ID 2:", myClass.showAll());
+console.log(analyzeOrders(orders));
