@@ -158,45 +158,289 @@
 
 // ======================================= Bai lam
 
-const orders = [
+// const orders = [
+//   {
+//     id: 1,
+//     customer: "Alice",
+//     items: [
+//       { name: "Laptop", price: 1000 },
+//       { name: "Mouse", price: 50 },
+//     ],
+//     status: "completed",
+//   },
+//   {
+//     id: 2,
+//     customer: "Bob",
+//     items: [{ name: "Phone", price: 500 }],
+//     status: "pending",
+//   },
+//   {
+//     id: 3,
+//     customer: "Alice",
+//     items: [{ name: "Keyboard", price: 100 }],
+//     status: "completed",
+//   },
+//   {
+//     id: 4,
+//     customer: "Charlie",
+//     items: [{ name: "Monitor", price: 300 }],
+//     status: "completed",
+//   },
+// ];
+
+// function analyzeOrders(orders) {
+//   const completedOrders = orders.filter(
+//     (order) => order.status === "completed",
+//   );
+//   return {
+//     getTotalRevenue() {
+//       return completedOrders.reduce((total, order) => {
+//         const orderPrice = order.items.reduce(
+//           (sum, item) => sum + item.price,
+//           0,
+//         );
+//         return total + orderPrice;
+//       }, 0);
+//     },
+//     getCustomerSpending() {
+//       return completedOrders.reduce((acc, order) => {
+//         const customer = order.customer;
+//         const orderPrice = order.items.reduce(
+//           (sum, item) => sum + item.price,
+//           0,
+//         );
+//         acc[customer] = (acc[customer] || 0) + orderPrice;
+
+//         return acc;
+//       }, {});
+//     },
+//     getUniqueProducts() {
+//       const allProductNames = completedOrders.flatMap((order) =>
+//         order.items.map((item) => item.name),
+//       );
+//       return [...new Set(allProductNames)];
+//     },
+
+//     isAllHighValue() {
+//       return completedOrders.every((order) => {
+//         const total = order.items.reduce((sum, item) => sum + item.price, 0);
+//         return total > 100;
+//       });
+//     },
+//   };
+// }
+
+// const analytics = analyzeOrders(orders);
+// console.log("Doanh thu:", analytics.getTotalRevenue());
+// console.log("Chi tiêu mỗi khách:", analytics.getCustomerSpending());
+// console.log("Sản phẩm đã bán:", analytics.getUniqueProducts());
+// console.log("Tất cả đơn > 100?", analytics.isAllHighValue());
+
+// ======================================= Bài tập thực hành (bài tập mới) ==============================================
+// 📝 Bài tập 3: Quản lý Kho Hàng (Inventory)
+// Ngữ cảnh: Bạn quản lý một kho quần áo. Mỗi sản phẩm có tên, danh mục (category), giá bán (price), và số lượng tồn kho (stock).
+// Dữ liệu đầu vào:
+
+// JavaScript
+// const inventory = [
+//   { name: "Áo thun", category: "Shirt", price: 200, stock: 10 },
+//   { name: "Quần Jeans", category: "Pant", price: 500, stock: 5 },
+//   { name: "Áo sơ mi", category: "Shirt", price: 300, stock: 15 },
+//   { name: "Quần Short", category: "Pant", price: 250, stock: 20 },
+//   { name: "Giày Sneaker", category: "Shoes", price: 1000, stock: 2 },
+// ];
+// Yêu cầu bạn cần thực hiện:
+// getLowStock(): Lọc ra các sản phẩm sắp hết hàng (Có stock nhỏ hơn 10). (Dùng .filter()).
+// getTotalInventoryValue(): Tính tổng giá trị của toàn bộ kho hàng.
+// Gợi ý: Giá trị của 1 sản phẩm = price * stock. Bạn cần tính tổng của tất cả các phép nhân này. (Dùng .reduce() với giá trị khởi tạo là 0).
+// getStockByCategory() - (Màn Boss của bạn đây!): Gom nhóm tổng số lượng hàng tồn kho theo từng danh mục.
+// Kết quả mong đợi: { "Shirt": 25, "Pant": 25, "Shoes": 2 } (Vì có 10 Áo thun + 15 Áo sơ mi = 25 Shirt).
+// Gợi ý: Dùng .reduce() với giá trị khởi tạo là Object {}. Cách làm giống hệt việc cộng dồn tiền cho khách hàng ở bài trước: acc[category] = (acc[category] || 0) + stock;.
+// getPromoStrings(): Trả về một mảng chứa các câu quảng cáo cho từng sản phẩm theo mẫu: "Giảm giá cực sốc: [Tên sản phẩm] chỉ với [Giá]!". (Dùng .map()).
+
+// ======================================= Bai lam
+
+// const inventory = [
+//   { name: "Áo thun", category: "Shirt", price: 200, stock: 10 },
+//   { name: "Quần Jeans", category: "Pant", price: 500, stock: 5 },
+//   { name: "Áo sơ mi", category: "Shirt", price: 300, stock: 15 },
+//   { name: "Quần Short", category: "Pant", price: 250, stock: 20 },
+//   { name: "Giày Sneaker", category: "Shoes", price: 1000, stock: 2 },
+// ];
+
+//  return completedOrders.reduce((acc, order) => {
+//         const customer = order.customer;
+//         const orderPrice = order.items.reduce(
+//           (sum, item) => sum + item.price,
+//           0,
+//         );
+//         acc[customer] = (acc[customer] || 0) + orderPrice;
+
+//         return acc;
+//       }, {});
+
+// function manageInventory(inventory) {
+//   return {
+//     getLowStock() {
+//       let product = inventory.filter((item) => item.stock < 10);
+//       return product;
+//     },
+//     getTotalInventoryValue() {
+//       let totalPrice = inventory.reduce(
+//         (total, item) => total + item.price * item.stock,
+//         0,
+//       );
+//       return totalPrice;
+//     },
+//     getStockByCategory() {
+//       return inventory.reduce((chiecTu, sanPham) => {
+//         const danhMuc = sanPham.category;
+//         const soLuong = sanPham.stock;
+//         chiecTu[danhMuc] = (chiecTu[danhMuc] || 0) + soLuong;
+//         return chiecTu;
+//       }, {});
+//     },
+//     getPromoStrings() {
+//       return inventory.map(
+//         (item) => `Giảm giá cực sốc: ${item.name} chỉ với ${item.price}!`,
+//       );
+//     },
+//   };
+// }
+
+// const myStore = manageInventory(inventory);
+// console.log("Sắp hết hàng:", myStore.getLowStock());
+// console.log("Tổng giá trị kho:", myStore.getTotalInventoryValue());
+// console.log("Tồn kho theo danh mục:", myStore.getStockByCategory());
+// console.log("Chuỗi quảng cáo:", myStore.getPromoStrings());
+
+// ======================================= Bài tập thực hành (bài tập mới) ==============================================
+
+// 📝 Bài tập nâng cao: Phân tích mạng xã hội (Social Media Analytics)
+// Ngữ cảnh: Bạn có một danh sách người dùng. Mỗi người dùng có một mảng các bài đăng (posts), mỗi bài đăng lại có số lượt thích (likes) và một mảng các nhãn (tags).
+// Dữ liệu đầu vào:
+// JavaScript
+// const users = [
+//   {
+//     id: 1,
+//     name: "Alice",
+//     posts: [
+//       { content: "Yêu đời quá", likes: 120, tags: ["lifestyle", "happy"] },
+//       { content: "Học JS khó quá", likes: 50, tags: ["coding", "javascript"] },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     name: "Bob",
+//     posts: [
+//       { content: "Cà phê sáng", likes: 200, tags: ["lifestyle", "coffee"] },
+//     ],
+//   },
+//   {
+//     id: 3,
+//     name: "Charlie",
+//     posts: [
+//       { content: "JS thật vi diệu", likes: 80, tags: ["coding", "javascript"] },
+//       { content: "Chill cuối tuần", likes: 150, tags: ["lifestyle", "relax"] },
+//     ],
+//   },
+// ];
+// 🚀 Yêu cầu (Độ khó: ⭐⭐⭐)
+// Bạn hãy viết các hàm sau:
+// - getStatistics(): Trả về một mảng các Object mới, mỗi Object chứa name của người dùng và totalLikes (tổng likes của tất cả bài post của người đó).
+// Gợi ý: Dùng .map() để duyệt qua các user, bên trong mỗi user dùng .reduce() để tính tổng likes.
+// - getTrendingTags(): Trả về một Object thống kê số lần xuất hiện của từng tag trên toàn hệ thống.
+// Kết quả mong đợi: { lifestyle: 3, happy: 1, coding: 2, ... }
+// Gợi ý: Dùng .flatMap() để lấy toàn bộ tags ra một mảng phẳng, sau đó dùng .reduce() với logic "chiếc tủ" để đếm.
+// - getInfluencers(): Lọc ra danh sách những người dùng có tổng số likes trên 250.
+// Gợi ý: Bạn có thể tận dụng kết quả của hàm số 1 hoặc dùng .filter().
+// - findHardcoreCoders(): Tìm danh sách tên (mảng string) những người dùng có ít nhất một bài đăng chứa tag "javascript".
+// Gợi ý: Kết hợp .filter() và .some().
+
+// ======================================= Bai lam
+
+const users = [
   {
     id: 1,
-    customer: "Alice",
-    items: [
-      { name: "Laptop", price: 1000 },
-      { name: "Mouse", price: 50 },
+    name: "Alice",
+    posts: [
+      { content: "Yêu đời quá", likes: 120, tags: ["lifestyle", "happy"] },
+      { content: "Học JS khó quá", likes: 50, tags: ["coding", "javascript"] },
     ],
-    status: "completed",
   },
   {
     id: 2,
-    customer: "Bob",
-    items: [{ name: "Phone", price: 500 }],
-    status: "pending",
+    name: "Bob",
+    posts: [
+      { content: "Cà phê sáng", likes: 200, tags: ["lifestyle", "coffee"] },
+      { content: "Cà phê trưa", likes: 400, tags: ["lifestyle", "coffee"] },
+    ],
   },
   {
     id: 3,
-    customer: "Alice",
-    items: [{ name: "Keyboard", price: 100 }],
-    status: "completed",
+    name: "Charlie",
+    posts: [
+      { content: "JS thật vi diệu", likes: 80, tags: ["coding", "javascript"] },
+      { content: "Chill cuối tuần", likes: 150, tags: ["lifestyle", "relax"] },
+    ],
   },
   {
     id: 4,
-    customer: "Charlie",
-    items: [{ name: "Monitor", price: 300 }],
-    status: "completed",
+    name: "Meme",
+    posts: [
+      { content: "JS thật vi diệu", likes: 80, tags: ["coding", "javascript"] },
+      { content: "Chill cuối tuần", likes: 150, tags: ["lifestyle", "relax"] },
+    ],
   },
 ];
 
-function analyzeOrders(orders) {
+function analyzeSocialData(data) {
   return {
+    // - getStatistics(): Trả về một mảng các Object mới, mỗi Object chứa name của người dùng và totalLikes (tổng likes của tất cả bài post của người đó).
+    // Gợi ý: Dùng .map() để duyệt qua các user, bên trong mỗi user dùng .reduce() để tính tổng likes.
+    getStatistics() {
+      return data.map((user) => {
+        let name = user.name;
+        let totalLike = user.posts.reduce((total, post) => {
+          return total + post.likes;
+        }, 0);
+
+        return { name: name, totalLike: totalLike };
+      });
+    },
+    // - getTrendingTags(): Trả về một Object thống kê số lần xuất hiện của từng tag trên toàn hệ thống.
+    // Kết quả mong đợi: { lifestyle: 3, happy: 1, coding: 2, ... }
+    // Gợi ý: Dùng .flatMap() để lấy toàn bộ tags ra một mảng phẳng, sau đó dùng .reduce() với logic "chiếc tủ" để đếm.
+    getTrendingTags() {
+      const allTags = data
+        .flatMap((user) => user.posts)
+        .flatMap((post) => post.tags);
+
+      return allTags.reduce((acc, tag) => {
+        acc[tag] = (acc[tag] || 0) + 1;
+        return acc;
+      }, {});
+    },
+    // - getInfluencers(): Lọc ra danh sách những người dùng có tổng số likes trên 250.
+    // Gợi ý: Bạn có thể tận dụng kết quả của hàm số 1 hoặc dùng .filter().
+    getInfluencers() {
+      const items = this.getStatistics();
+      return items.filter((item) => item.totalLike > 250);
+    },
+    // - findHardcoreCoders(): Tìm danh sách tên (mảng string) những người dùng có ít nhất một bài đăng chứa tag "javascript".
+    // Gợi ý: Kết hợp .filter() và .some().
+    findHardcoreCoders() {
+      const data = users.filter((user) => {
+        return user.posts.some((post) => post.tags.includes("javascript"));
+      });
+
+      return data.map((user) => user.name);
+    },
   };
 }
 
-const analytics = analyzeOrders(orders);
-console.log("Doanh thu:", analytics.getTotalRevenue());
-console.log("Chi tiêu mỗi khách:", analytics.getCustomerSpending());
-console.log("Sản phẩm đã bán:", analytics.getUniqueProducts());
-console.log("Tất cả đơn > 100?", analytics.isAllHighValue());
-
-console.log(analyzeOrders(orders));
+const analytics = analyzeSocialData(users);
+console.log("Thống kê Likes:", analytics.getStatistics());
+console.log("Tags xu hướng:", analytics.getTrendingTags());
+console.log("KOL (Influencers):", analytics.getInfluencers());
+console.log("Dân Pro JS:", analytics.findHardcoreCoders());
