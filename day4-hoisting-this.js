@@ -359,88 +359,232 @@
 
 // ======================================= Bai lam
 
-const users = [
-  {
-    id: 1,
-    name: "Alice",
-    posts: [
-      { content: "Yêu đời quá", likes: 120, tags: ["lifestyle", "happy"] },
-      { content: "Học JS khó quá", likes: 50, tags: ["coding", "javascript"] },
-    ],
-  },
-  {
-    id: 2,
-    name: "Bob",
-    posts: [
-      { content: "Cà phê sáng", likes: 200, tags: ["lifestyle", "coffee"] },
-      { content: "Cà phê trưa", likes: 400, tags: ["lifestyle", "coffee"] },
-    ],
-  },
-  {
-    id: 3,
-    name: "Charlie",
-    posts: [
-      { content: "JS thật vi diệu", likes: 80, tags: ["coding", "javascript"] },
-      { content: "Chill cuối tuần", likes: 150, tags: ["lifestyle", "relax"] },
-    ],
-  },
-  {
-    id: 4,
-    name: "Meme",
-    posts: [
-      { content: "JS thật vi diệu", likes: 80, tags: ["coding", "javascript"] },
-      { content: "Chill cuối tuần", likes: 150, tags: ["lifestyle", "relax"] },
-    ],
-  },
-];
+// const users = [
+//   {
+//     id: 1,
+//     name: "Alice",
+//     posts: [
+//       { content: "Yêu đời quá", likes: 120, tags: ["lifestyle", "happy"] },
+//       { content: "Học JS khó quá", likes: 50, tags: ["coding", "javascript"] },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     name: "Bob",
+//     posts: [
+//       { content: "Cà phê sáng", likes: 200, tags: ["lifestyle", "coffee"] },
+//       { content: "Cà phê trưa", likes: 400, tags: ["lifestyle", "coffee"] },
+//     ],
+//   },
+//   {
+//     id: 3,
+//     name: "Charlie",
+//     posts: [
+//       { content: "JS thật vi diệu", likes: 80, tags: ["coding", "javascript"] },
+//       { content: "Chill cuối tuần", likes: 150, tags: ["lifestyle", "relax"] },
+//     ],
+//   },
+//   {
+//     id: 4,
+//     name: "Meme",
+//     posts: [
+//       { content: "JS thật vi diệu", likes: 80, tags: ["coding", "javascript"] },
+//       { content: "Chill cuối tuần", likes: 150, tags: ["lifestyle", "relax"] },
+//     ],
+//   },
+// ];
 
-function analyzeSocialData(data) {
-  return {
-    // - getStatistics(): Trả về một mảng các Object mới, mỗi Object chứa name của người dùng và totalLikes (tổng likes của tất cả bài post của người đó).
-    // Gợi ý: Dùng .map() để duyệt qua các user, bên trong mỗi user dùng .reduce() để tính tổng likes.
-    getStatistics() {
-      return data.map((user) => {
-        let name = user.name;
-        let totalLike = user.posts.reduce((total, post) => {
-          return total + post.likes;
-        }, 0);
+// function analyzeSocialData(data) {
+//   return {
+//     // - getStatistics(): Trả về một mảng các Object mới, mỗi Object chứa name của người dùng và totalLikes (tổng likes của tất cả bài post của người đó).
+//     // Gợi ý: Dùng .map() để duyệt qua các user, bên trong mỗi user dùng .reduce() để tính tổng likes.
+//     getStatistics() {
+//       return data.map((user) => {
+//         let name = user.name;
+//         let totalLike = user.posts.reduce((total, post) => {
+//           return total + post.likes;
+//         }, 0);
 
-        return { name: name, totalLike: totalLike };
-      });
-    },
-    // - getTrendingTags(): Trả về một Object thống kê số lần xuất hiện của từng tag trên toàn hệ thống.
-    // Kết quả mong đợi: { lifestyle: 3, happy: 1, coding: 2, ... }
-    // Gợi ý: Dùng .flatMap() để lấy toàn bộ tags ra một mảng phẳng, sau đó dùng .reduce() với logic "chiếc tủ" để đếm.
-    getTrendingTags() {
-      const allTags = data
-        .flatMap((user) => user.posts)
-        .flatMap((post) => post.tags);
+//         return { name: name, totalLike: totalLike };
+//       });
+//     },
+//     // - getTrendingTags(): Trả về một Object thống kê số lần xuất hiện của từng tag trên toàn hệ thống.
+//     // Kết quả mong đợi: { lifestyle: 3, happy: 1, coding: 2, ... }
+//     // Gợi ý: Dùng .flatMap() để lấy toàn bộ tags ra một mảng phẳng, sau đó dùng .reduce() với logic "chiếc tủ" để đếm.
+//     getTrendingTags() {
+//       const allTags = data
+//         .flatMap((user) => user.posts)
+//         .flatMap((post) => post.tags);
 
-      return allTags.reduce((acc, tag) => {
-        acc[tag] = (acc[tag] || 0) + 1;
-        return acc;
-      }, {});
-    },
-    // - getInfluencers(): Lọc ra danh sách những người dùng có tổng số likes trên 250.
-    // Gợi ý: Bạn có thể tận dụng kết quả của hàm số 1 hoặc dùng .filter().
-    getInfluencers() {
-      const items = this.getStatistics();
-      return items.filter((item) => item.totalLike > 250);
-    },
-    // - findHardcoreCoders(): Tìm danh sách tên (mảng string) những người dùng có ít nhất một bài đăng chứa tag "javascript".
-    // Gợi ý: Kết hợp .filter() và .some().
-    findHardcoreCoders() {
-      const data = users.filter((user) => {
-        return user.posts.some((post) => post.tags.includes("javascript"));
-      });
+//       return allTags.reduce((acc, tag) => {
+//         acc[tag] = (acc[tag] || 0) + 1;
+//         return acc;
+//       }, {});
+//     },
+//     // - getInfluencers(): Lọc ra danh sách những người dùng có tổng số likes trên 250.
+//     // Gợi ý: Bạn có thể tận dụng kết quả của hàm số 1 hoặc dùng .filter().
+//     getInfluencers() {
+//       const items = this.getStatistics();
+//       return items.filter((item) => item.totalLike > 250);
+//     },
+//     // - findHardcoreCoders(): Tìm danh sách tên (mảng string) những người dùng có ít nhất một bài đăng chứa tag "javascript".
+//     // Gợi ý: Kết hợp .filter() và .some().
+//     findHardcoreCoders() {
+//       const data = users.filter((user) => {
+//         return user.posts.some((post) => post.tags.includes("javascript"));
+//       });
 
-      return data.map((user) => user.name);
-    },
-  };
-}
+//       return data.map((user) => user.name);
+//     },
+//   };
+// }
 
-const analytics = analyzeSocialData(users);
-console.log("Thống kê Likes:", analytics.getStatistics());
-console.log("Tags xu hướng:", analytics.getTrendingTags());
-console.log("KOL (Influencers):", analytics.getInfluencers());
-console.log("Dân Pro JS:", analytics.findHardcoreCoders());
+// const analytics = analyzeSocialData(users);
+// console.log("Thống kê Likes:", analytics.getStatistics());
+// console.log("Tags xu hướng:", analytics.getTrendingTags());
+// console.log("KOL (Influencers):", analytics.getInfluencers());
+// console.log("Dân Pro JS:", analytics.findHardcoreCoders());
+
+// ======================================= Bài tập thực hành (bài tập mới) ==============================================
+// 📝 Bài tập 5: Hệ thống Quản lý Rạp chiếu phim (Cinema Management)
+// Ngữ cảnh: Bạn đang quản lý lịch chiếu cho một rạp phim. Mỗi bộ phim có tên, thể loại, doanh thu theo từng suất chiếu, và lịch chiếu (ngày giờ).
+
+// Dữ liệu đầu vào:
+// const movies = [
+//   {
+//     title: "Inside Out 2",
+//     genres: ["Animation", "Family"],
+//     showtimes: [
+//       { date: "2024-06-01", time: "10:00", revenue: 500 },
+//       { date: "2024-06-01", time: "14:00", revenue: 800 },
+//       { date: "2024-06-02", time: "19:00", revenue: 1200 },
+//     ],
+//   },
+//   {
+//     title: "Dune: Part Two",
+//     genres: ["Sci-Fi", "Adventure"],
+//     showtimes: [
+//       { date: "2024-06-01", time: "15:00", revenue: 1500 },
+//       { date: "2024-06-02", time: "20:00", revenue: 2000 },
+//     ],
+//   },
+//   {
+//     title: "Despicable Me 4",
+//     genres: ["Animation", "Comedy"],
+//     showtimes: [
+//       { date: "2024-06-01", time: "09:00", revenue: 400 },
+//     ],
+//   },
+// ];
+
+// 🚀 Yêu cầu (Độ khó: ⭐⭐⭐⭐ - Thử thách cực đại)
+// Hãy viết hàm analyzeCinema(movies) trả về các phương thức sau:
+
+// getMovieSummaries(): Trả về mảng các phim kèm theo totalRevenue của phim đó.
+// Kết quả: [{ title: "Inside Out 2", totalRevenue: 2500 }, ...]
+
+// getRevenueByGenre(): Tính tổng doanh thu theo từng thể loại phim. Lưu ý: Một bộ phim có thể có nhiều thể loại,
+// doanh thu của phim đó sẽ được tính cộng dồn cho tất cả các thể loại mà nó thuộc về.
+// Gợi ý: Dùng reduce. Với mỗi bộ phim, bạn duyệt qua mảng genres của nó và cộng totalRevenue vào ngăn tủ tương ứng.
+
+// getNightMovies(): Tìm tên các bộ phim có ít nhất một suất chiếu vào khung giờ tối (sau 18:00).
+// Gợi ý: Dùng .filter() và .some(). So sánh chuỗi thời gian: "19:00" > "18:00" là true.
+
+// getTopGrossingMovie(): Trả về duy nhất Object của bộ phim có tổng doanh thu cao nhất.
+// Gợi ý: Tính doanh thu xong rồi dùng .sort() giảm dần và lấy phần tử đầu tiên [0].
+
+// ======================================= Bai lam
+
+// const movies = [
+//   {
+//     title: "Inside Out 2",
+//     genres: ["Animation", "Family"],
+//     showtimes: [
+//       { date: "2024-06-01", time: "10:00", revenue: 500 },
+//       { date: "2024-06-01", time: "14:00", revenue: 800 },
+//       { date: "2024-06-02", time: "19:00", revenue: 1200 },
+//     ],
+//   },
+//   {
+//     title: "Dune: Part Two",
+//     genres: ["Sci-Fi", "Adventure"],
+//     showtimes: [
+//       { date: "2024-06-01", time: "15:00", revenue: 1500 },
+//       { date: "2024-06-02", time: "20:00", revenue: 2000 },
+//     ],
+//   },
+//   {
+//     title: "Despicable Me 4",
+//     genres: ["Animation", "Comedy"],
+//     showtimes: [{ date: "2024-06-01", time: "09:00", revenue: 400 }],
+//   },
+// ];
+
+// function analyzeCinema(data) {
+//   return {
+//     // getMovieSummaries(): Trả về mảng các phim kèm theo totalRevenue của phim đó.
+//     // Kết quả: [{ title: "Inside Out 2", totalRevenue: 2500 }, ...]
+//     getMovieSummaries() {
+//       let sumaries = data.map((item) => {
+//         let totalRevenue = item.showtimes.reduce(
+//           (total, subItem) => total + subItem.revenue,
+//           0,
+//         );
+
+//         return {
+//           title: item.title,
+//           total: totalRevenue,
+//         };
+//       });
+
+//       return sumaries;
+//     },
+//     // getRevenueByGenre(): Tính tổng doanh thu theo từng thể loại phim. Lưu ý: Một bộ phim có thể có nhiều thể loại,
+//     // doanh thu của phim đó sẽ được tính cộng dồn cho tất cả các thể loại mà nó thuộc về.
+//     // Gợi ý: Dùng reduce. Với mỗi bộ phim, bạn duyệt qua mảng genres của nó và cộng totalRevenue vào ngăn tủ tương ứng.
+//     getRevenueByGenre() {
+//       let revenueByGenres = data.reduce((acc, item) => {
+//         let totalRevenue = item.showtimes.reduce(
+//           (total, subItem) => total + subItem.revenue,
+//           0,
+//         );
+
+//         return item.genres.reduce((acc2, genre) => {
+//           acc2[genre] = (acc2[genre] || 0) + totalRevenue;
+//           return acc2;
+//         }, acc);
+//       }, {});
+
+//       return revenueByGenres;
+//     },
+//     // getNightMovies(): Tìm tên các bộ phim có ít nhất một suất chiếu vào khung giờ tối (sau 18:00).
+//     // Gợi ý: Dùng .filter() và .some(). So sánh chuỗi thời gian: "19:00" > "18:00" là true.
+//     getNightMovies() {
+//       const items = data.filter((item) => {
+//         return item.showtimes.some((subItem) => subItem.time > "18:00");
+//       });
+
+//       return items.map((item) => {
+//         return {
+//           name: item.title,
+//           time: item.showtimes
+//             .filter((subItem) => subItem.time > "18:00")
+//             .map((subItem) => subItem.time),
+//         };
+//       });
+//     },
+//     // getTopGrossingMovie(): Trả về duy nhất Object của bộ phim có tổng doanh thu cao nhất.
+//     // Gợi ý: Tính doanh thu xong rồi dùng .sort() giảm dần và lấy phần tử đầu tiên [0].
+//     getTopGrossingMovie() {
+//       const summaries = this.getMovieSummaries();
+//       summaries.sort((a, b) => b.totalRevenues - a.totalRevenues);
+//       return movies[0];
+//     },
+//   };
+// }
+
+// const cinemaStats = analyzeCinema(movies);
+// console.log("Tóm tắt doanh thu:", cinemaStats.getMovieSummaries());
+// console.log("Doanh thu theo thể loại:", cinemaStats.getRevenueByGenre());
+// console.log("Phim chiếu tối:", cinemaStats.getNightMovies());
+// console.log("Phim ăn khách nhất:", cinemaStats.getTopGrossingMovie());
